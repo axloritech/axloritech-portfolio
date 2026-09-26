@@ -152,10 +152,10 @@ export const projects: Project[] = [
     name: "ChartMind",
     description:
       "An intelligent chart-analysis platform designed to help users analyze trading charts and extract useful insights.",
-    href: "https://chartmind.vercel.app/",
+    href: "https://chartmind-zeta.vercel.app/",
     tags: ["Next.js", "TypeScript", "AI", "Data"],
     image: "/projects/chartmind.webp",
-    blur: "data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAABwBQCdASooABkAPtFipE6oJaMiKrgKAQAaCWMAygALNna3QxA2o0djbDDhow63d4vP5jFAAP72jY+qu5KmBwgG7PXK8LWOCFTjefTblfRbcOoV0h6KXQuH/Kxf/eXJUGpGzLFaoNrFLMZVrBqR5iYBm0ER9KENCzcq+kjodqt88KczGcYQ75vOiDvZx+sajwjwmUuWzjFdjtpCpjFnte2WsRgAAA==",
+    blur: "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAAAQBQCdASooABkAPs1SoEunpKMhtVgIAPAZiWUAAL8OaICIoJCpBoY2rvhekBRNw7EAAP76GZ+lbasYhpRjpwuZcVD27TlhTJilavGzM7GAlqGynvz9U0qFuTAl79/W24yrUiQD8YbxsAS5f876bMS7/T2j84hsGhp7MF5wr10z+KuX4OUCHoBJZGXXgScAAAA=",
   },
   {
     name: "Axlori Agent",
