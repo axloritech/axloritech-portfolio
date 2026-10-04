@@ -96,6 +96,12 @@ Almost everything lives in [`lib/site.ts`](lib/site.ts):
 | Skill groups + badges | `skillGroups` |
 | Contact CTA target | `contactEmail` |
 
+**Portrait photo:** the round portrait at the top of the About section reads
+`public/image.jpg` directly — drop your photo in at that exact path (square crop works
+best, portrait orientation is handled) and it appears automatically, no code change.
+The neutral placeholder currently committed is replaced the moment a real file loads.
+Square source images work best; for tall photos the frame crops around the face.
+
 **Contact button:** `contactEmail` is intentionally empty, so nothing is invented. While it is
 empty the CTA opens a DM on X (the sub-label under the button says so). Set a real address and
 the same button becomes a `mailto:` link automatically:
