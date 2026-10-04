@@ -163,7 +163,7 @@ export const projects: Project[] = [
       "An AI-powered agent concept designed to interact with users and assist with intelligent tasks and workflows.",
     href: "https://axloriagent.vercel.app/",
     tags: ["Next.js", "TypeScript", "AI", "Automation"],
-    image: "/projects/axloriagent.webp",
-    blur: "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASooABkAPtFepE2oJSMiKqoBABoJZQAASxWYUmCHA3vpAAD+8cdSO/pZ6e9k0jbc+pIrHzRDjrbLneOzs7UolglhSXqBSBQAAAA=",
+    image: "/projects/axloriagent-dashboard.webp",
+    blur: "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAACQBACdASooABkAPtFgqE4oJaQiKqgBABoJZwDRgB2F/k/J8IiUxMtA0UspJgAA/vHJupG4iDqdNr8QNKjLtQH+TSCYhyUMQKzzRRXocEkkvpx8YQCKMxLLMJkvraCRo84SRiypNPoPrubLdu6oXAyw//6+6FFC88tMPSZWFzAAAA==",
   },
 ];
