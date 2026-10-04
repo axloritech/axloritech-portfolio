@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 60 * 60 * 24 * 30,
+    minimumCacheTTL: 60 * 60 * 24, // 1 day — keeps swapped previews from going stale at the CDN
     deviceSizes: [360, 480, 640, 828, 1080, 1280, 1600, 1920, 2560],
   },
 

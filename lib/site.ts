@@ -154,7 +154,7 @@ export const projects: Project[] = [
       "An intelligent chart-analysis platform designed to help users analyze trading charts and extract useful insights.",
     href: "https://chartmind-zeta.vercel.app/",
     tags: ["Next.js", "TypeScript", "AI", "Data"],
-    image: "/projects/chartmind.webp",
+    image: "/projects/chartmind-zeta.webp",
     blur: "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAAAQBQCdASooABkAPs1SoEunpKMhtVgIAPAZiWUAAL8OaICIoJCpBoY2rvhekBRNw7EAAP76GZ+lbasYhpRjpwuZcVD27TlhTJilavGzM7GAlqGynvz9U0qFuTAl79/W24yrUiQD8YbxsAS5f876bMS7/T2j84hsGhp7MF5wr10z+KuX4OUCHoBJZGXXgScAAAA=",
   },
   {
