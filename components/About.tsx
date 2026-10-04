@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { SectionHeading } from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
+import Portrait from "@/components/Portrait";
 
 const approach = [
   {
@@ -34,6 +35,20 @@ export default function About() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
+            <Reveal y={12}>
+              <div className="mb-8 flex items-center gap-5 sm:mb-9 sm:gap-6">
+                <Portrait className="h-20 w-20 sm:h-[5.5rem] sm:w-[5.5rem]" />
+                <div className="min-w-0">
+                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-muted">
+                    Axloritech
+                  </p>
+                  <p className="mt-1.5 font-display text-lg font-semibold leading-snug text-ink sm:text-xl">
+                    Full-Stack Developer &amp; Builder
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
             <SectionHeading
               index="01"
               eyebrow="About"
