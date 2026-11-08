@@ -96,6 +96,13 @@ Almost everything lives in [`lib/site.ts`](lib/site.ts):
 | Skill groups + badges | `skillGroups` |
 | Contact CTA target | `contactEmail` |
 
+**Canonical domain / SEO:** `site.url` resolves in this order — `NEXT_PUBLIC_SITE_URL`,
+then Vercel's own `VERCEL_PROJECT_PRODUCTION_URL` / `VERCEL_URL`, then localhost. So the
+canonical tag, `og:url`, JSON-LD, `robots.txt` and `sitemap.xml` always match the domain
+the build is actually served from. When you attach a custom domain, set
+`NEXT_PUBLIC_SITE_URL=https://yourdomain.com` in the Vercel project's environment
+variables and redeploy, or the canonical will keep pointing at the `*.vercel.app` host.
+
 **Portrait photo:** the round portrait at the top of the About section reads
 `public/image.jpg` directly — drop your photo in at that exact path (square crop works
 best, portrait orientation is handled) and it appears automatically, no code change.

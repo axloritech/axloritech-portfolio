@@ -3,6 +3,28 @@
  * Everything brand-related lives here so it is easy to update in one place.
  */
 
+/**
+ * Canonical origin for the site.
+ *
+ * Order of preference:
+ *  1. NEXT_PUBLIC_SITE_URL  — set this to the live custom domain when there is one.
+ *  2. VERCEL_PROJECT_PRODUCTION_URL / VERCEL_URL — injected by Vercel, so the
+ *     canonical always matches the domain the build is actually served from.
+ *     (Hardcoding a *other* project's domain here is what made Google treat the
+ *     site as a duplicate of an unrelated page.)
+ *  3. localhost — local development only.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/+$/, "");
+
+  const vercelHost =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
+  if (vercelHost) return `https://${vercelHost.replace(/\/+$/, "")}`;
+
+  return "http://localhost:3000";
+}
+
 export const site = {
   name: "Axloritech",
   /** Set this to a real address to enable the mailto CTA. Leave empty to route the
@@ -10,7 +32,7 @@ export const site = {
   contactEmail: "",
   tagline: "Tech Beyond Limits.",
   role: "Full-Stack Developer & Builder",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://axloritech.vercel.app",
+  url: resolveSiteUrl(),
   description:
     "Axloritech is the portfolio of a full-stack software developer building modern web applications, AI-powered products and digital experiences with Next.js, React, TypeScript and Node.js.",
 } as const;
