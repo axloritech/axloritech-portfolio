@@ -6,49 +6,67 @@
 :root {
   color-scheme: light;
 
-  --canvas: #fbfbfc;
-  --canvas-alt: #f4f4f6;
+  /* Brand palette (Jeita board): lime #AFE800 · indigo #190F6F ·
+     ice #A5CBDC · off-white #F5FAFE · black #000000.
+     Light theme = the board's white variation: indigo ink on off-white,
+     lime reserved for graphic highlights (it fails as small text on white). */
+  --brand-lime: #afe800;
+  --brand-indigo: #190f6f;
+  --brand-ice: #a5cbdc;
+  --canvas: #f5fafe;
+  --canvas-alt: #e9f1f7;
   --surface: #ffffff;
-  --surface-2: #f6f6f8;
-  --ink: #0b0b0f;
-  --ink-soft: #2a2a33;
-  --muted: #6b6b76;
-  --line: rgba(11, 11, 15, 0.1);
-  --line-strong: rgba(11, 11, 15, 0.16);
-  --accent: #6d3cf5;
-  --accent-soft: rgba(109, 60, 245, 0.1);
-  --accent-ring: rgba(109, 60, 245, 0.32);
-  --shadow-card: 0 1px 2px rgba(11, 11, 15, 0.04), 0 12px 32px -16px rgba(11, 11, 15, 0.18);
-  --shadow-float: 0 24px 60px -28px rgba(11, 11, 15, 0.3);
-  --grid-line: rgba(11, 11, 15, 0.045);
-  --glow: rgba(109, 60, 245, 0.16);
-  --code-keyword: #5b21b6;
-  --code-string: #047857;
-  --code-bool: #0369a1;
+  --surface-2: #eaf2f8;
+  --ink: #190f6f;
+  --ink-soft: #37308a;
+  --muted: #4f4a8a;
+  --line: rgba(25, 15, 111, 0.12);
+  --line-strong: rgba(25, 15, 111, 0.22);
+  --accent: #190f6f;
+  --accent-ink: #f5fafe;
+  --accent-soft: rgba(165, 203, 220, 0.32);
+  --accent-ring: rgba(25, 15, 111, 0.35);
+  --highlight: #afe800;
+  --highlight-ink: #190f6f;
+  --shadow-card: 0 1px 2px rgba(25, 15, 111, 0.05), 0 12px 32px -16px rgba(25, 15, 111, 0.22);
+  --shadow-float: 0 24px 60px -28px rgba(25, 15, 111, 0.35);
+  --grid-line: rgba(25, 15, 111, 0.05);
+  --glow: rgba(165, 203, 220, 0.45);
+  --code-keyword: #190f6f;
+  --code-string: #487800;
+  --code-bool: #2f6b8a;
 }
 
 .dark {
   color-scheme: dark;
 
-  --canvas: #07070a;
-  --canvas-alt: #0a0a0e;
-  --surface: #0e0e13;
-  --surface-2: #14141b;
-  --ink: #f4f4f7;
-  --ink-soft: #d5d5dd;
-  --muted: #8d8d99;
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.18);
-  --accent: #a78bfa;
-  --accent-soft: rgba(139, 92, 246, 0.16);
-  --accent-ring: rgba(167, 139, 250, 0.4);
-  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -28px rgba(0, 0, 0, 0.9);
+  /* Dark theme = the board's principal logo: off-white on pure black,
+     lime accent (the dot), ice as the cool secondary. */
+  --brand-lime: #afe800;
+  --brand-indigo: #190f6f;
+  --brand-ice: #a5cbdc;
+  --canvas: #000000;
+  --canvas-alt: #060418;
+  --surface: #0b0724;
+  --surface-2: #150e3d;
+  --ink: #f5fafe;
+  --ink-soft: #d9e6ef;
+  --muted: #93a7c4;
+  --line: rgba(165, 203, 220, 0.14);
+  --line-strong: rgba(165, 203, 220, 0.24);
+  --accent: #afe800;
+  --accent-ink: #190f6f;
+  --accent-soft: rgba(175, 232, 0, 0.13);
+  --accent-ring: rgba(175, 232, 0, 0.45);
+  --highlight: #afe800;
+  --highlight-ink: #190f6f;
+  --shadow-card: 0 1px 0 rgba(245, 250, 254, 0.04) inset, 0 20px 40px -28px rgba(0, 0, 0, 0.9);
   --shadow-float: 0 30px 80px -40px rgba(0, 0, 0, 1);
-  --grid-line: rgba(255, 255, 255, 0.035);
-  --glow: rgba(139, 92, 246, 0.22);
-  --code-keyword: #c4b5fd;
-  --code-string: #7dd3a8;
-  --code-bool: #8ecdf7;
+  --grid-line: rgba(165, 203, 220, 0.05);
+  --glow: rgba(175, 232, 0, 0.16);
+  --code-keyword: #afe800;
+  --code-string: #a5cbdc;
+  --code-bool: #f5fafe;
 }
 
 @theme inline {
@@ -63,6 +81,10 @@
   --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-highlight: var(--highlight);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-indigo: var(--brand-indigo);
+  --color-brand-ice: var(--brand-ice);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: var(--font-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -254,7 +276,8 @@
 
   .btn-accent {
     background: var(--accent);
-    color: #fff;
+    color: var(--accent-ink);
+    font-weight: 600;
     box-shadow: 0 12px 30px -16px var(--accent-ring);
   }
 

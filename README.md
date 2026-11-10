@@ -124,11 +124,14 @@ contactEmail: "hello@yourdomain.com",
 
 A sophisticated dark/light system driven by CSS custom properties in `app/globals.css`.
 
-- **Dark** is the default (slightly futuristic, near-black `#07070a`); **light** is a clean
-  document-white counterpart. The toggle persists to `localStorage` and is applied by a
+- **Colour palette** (from the brand board): lime `#AFE800`, deep indigo `#190F6F`,
+  ice `#A5CBDC`, off-white `#F5FAFE`, black `#000000`. **Dark** is the default — off-white
+  on pure black with lime as the accent and ice as the secondary, like the principal
+  logo. **Light** is the board's white variation — indigo ink on off-white, ice-tinted
+  surfaces, lime kept for graphic highlights only (it fails contrast as small text on
+  white, so light-theme text accents are indigo; the CTA flips to indigo text on lime
+  in dark via `--accent-ink`). The toggle persists to `localStorage` and is applied by a
   pre-paint inline script, so there is no theme flash.
-- **Accents** are a single restrained purple (`#a78bfa` dark / `#6d3cf5` light) used only for
-  highlights, interactive states and key details.
 - **Typography:** Plus Jakarta Sans for display headings, Inter for body copy, JetBrains Mono
   for code and micro-labels. All self-hosted (latin variable subsets, 3 files, ~105 KB).
 - Deliberately avoided: heavy glassmorphism, big gradients, neon, clutter.

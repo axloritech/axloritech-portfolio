@@ -29,7 +29,7 @@ export default function SiteFooter() {
               aria-label={`${site.name} — back to top`}
             >
               <span className="font-display text-lg font-extrabold tracking-[0.2em] text-ink">
-                AXLORI<span className="text-accent">TECH</span>
+                AXLORI<span className="text-accent">TECH</span><span className="text-highlight" aria-hidden="true">.</span>
               </span>
             </a>
             <p className="mt-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-muted">

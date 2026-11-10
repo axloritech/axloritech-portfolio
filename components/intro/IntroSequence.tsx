@@ -223,7 +223,7 @@ export default function IntroSequence() {
       {phase !== "done" && (
         <motion.div
           key="intro"
-          className="intro-overlay fixed inset-0 z-[100] flex-col items-center justify-center bg-[#050507]"
+          className="intro-overlay fixed inset-0 z-[100] flex-col items-center justify-center bg-black"
           initial={{ opacity: 0 }}
           animate={{ opacity: closing ? 0 : 1 }}
           transition={{
@@ -242,7 +242,7 @@ export default function IntroSequence() {
             className="pointer-events-none absolute left-1/2 top-1/2 h-[46rem] w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-[120px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(139,92,246,0.20) 0%, rgba(139,92,246,0.06) 42%, transparent 70%)",
+                "radial-gradient(circle, rgba(175,232,0,0.16) 0%, rgba(25,15,111,0.20) 45%, transparent 70%)",
             }}
           />
 
@@ -269,13 +269,13 @@ export default function IntroSequence() {
                     y2="0"
                   >
                     <stop offset="0%" stopColor="#ffffff" />
-                    <stop offset="45%" stopColor="#e7e1ff" />
-                    <stop offset="100%" stopColor="#8b5cf6" />
+                    <stop offset="45%" stopColor="#a5cbdc" />
+                    <stop offset="100%" stopColor="#afe800" />
                   </linearGradient>
                   <radialGradient id="intro-tip-glow">
                     <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-                    <stop offset="35%" stopColor="#a78bfa" stopOpacity="0.45" />
-                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+                    <stop offset="35%" stopColor="#a5cbdc" stopOpacity="0.45" />
+                    <stop offset="100%" stopColor="#afe800" stopOpacity="0" />
                   </radialGradient>
                 </defs>
 
@@ -285,7 +285,7 @@ export default function IntroSequence() {
                   strokeWidth={7}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ filter: "drop-shadow(0 0 15px rgba(139,92,246,0.32))" }}
+                  style={{ filter: "drop-shadow(0 0 15px rgba(175,232,0,0.35))" }}
                 >
                   {strokes.strokes.map((s, i) => (
                     <path
@@ -314,7 +314,7 @@ export default function IntroSequence() {
 
               <div className="mt-2 flex h-16 flex-col items-center justify-start gap-3 sm:mt-4 sm:h-20">
                 <motion.div
-                  className="h-px w-24 bg-gradient-to-r from-transparent via-[#8b5cf6] to-transparent"
+                  className="h-px w-24 bg-gradient-to-r from-transparent via-[#afe800] to-transparent"
                   initial={false}
                   animate={tagline ? { scaleX: 1, opacity: 0.9 } : { scaleX: 0, opacity: 0 }}
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}

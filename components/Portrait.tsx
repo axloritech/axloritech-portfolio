@@ -42,7 +42,7 @@ export default function Portrait({
       className={`relative inline-flex shrink-0 items-center justify-center rounded-full p-[3px] ${className}`}
       style={{
         background:
-          "conic-gradient(from 145deg, var(--accent) 0%, rgba(167,139,250,0.45) 22%, var(--line-strong) 48%, rgba(167,139,250,0.45) 72%, var(--accent) 100%)",
+          "conic-gradient(from 145deg, var(--accent) 0%, rgba(165,203,220,0.55) 22%, var(--line-strong) 48%, rgba(165,203,220,0.55) 72%, var(--accent) 100%)",
       }}
     >
       <span className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-surface-2">

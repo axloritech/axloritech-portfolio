@@ -122,7 +122,7 @@ export default function SiteHeader() {
         {/* Wordmark */}
         <a href={homeHref} className="group flex items-baseline gap-2.5 py-2">
           <span className="font-display text-[0.95rem] font-extrabold tracking-[0.2em] text-ink sm:text-base">
-            AXLORI<span className="text-accent">TECH</span>
+            AXLORI<span className="text-accent">TECH</span><span className="text-highlight" aria-hidden="true">.</span>
           </span>
           <span className="hidden font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted lg:inline">
             {site.tagline}

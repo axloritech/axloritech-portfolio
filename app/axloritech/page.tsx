@@ -143,7 +143,7 @@ export default function AxloritechPage() {
                   id="company-title"
                   className="mt-4 font-display text-[2.15rem] font-extrabold leading-[1.05] tracking-[0.02em] text-ink sm:text-5xl lg:text-[3.5rem]"
                 >
-                  AXLORI<span className="text-accent">TECH</span>
+                  AXLORI<span className="text-accent">TECH</span><span className="text-highlight" aria-hidden="true">.</span>
                 </h1>
                 <p className="mt-4 font-mono text-[0.8rem] uppercase tracking-[0.2em] text-accent">
                   {organization.slogan}
