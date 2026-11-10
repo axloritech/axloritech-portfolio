@@ -34,7 +34,7 @@ export const site = {
   role: "Full-Stack Developer & Builder",
   url: resolveSiteUrl(),
   description:
-    "Axloritech is the portfolio of a full-stack software developer building modern web applications, AI-powered products and digital experiences with Next.js, React, TypeScript and Node.js.",
+    "Axloritech — the portfolio of Jeremiah Iselen, a full-stack developer building modern web applications, AI-powered products and developer experiences.",
 } as const;
 
 export const socials = [

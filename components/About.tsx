@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { SectionHeading } from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
@@ -63,6 +64,21 @@ export default function About() {
                 systems, building products that are designed to be useful, scalable and enjoyable to
                 use.
               </p>
+
+              {/* Two identities, deliberately linked: the person behind the work
+                  and the company the work is shipped under. */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+                <Link
+                  href="/jeremiah-iselen"
+                  className="link-underline font-medium text-ink"
+                >
+                  About Jeremiah Iselen
+                </Link>
+                <span aria-hidden="true" className="hidden h-3 w-px bg-line-strong sm:block" />
+                <Link href="/axloritech" className="link-underline font-medium text-ink">
+                  Axloritech company profile
+                </Link>
+              </div>
             </Reveal>
 
             <ul className="mt-9 grid gap-5 sm:grid-cols-3 lg:gap-6">

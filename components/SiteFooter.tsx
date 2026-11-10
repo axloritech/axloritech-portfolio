@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { socials, site } from "@/lib/site";
 import { GithubIcon, InstagramIcon, XIcon } from "@/components/icons";
 import ReplayIntroButton from "@/components/ReplayIntroButton";
@@ -12,13 +14,20 @@ const icons: Record<string, (p: { className?: string }) => React.ReactElement> =
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  const to = (hash: string) => (onHome ? hash : `/${hash}`);
 
   return (
     <footer className="hairline mt-4 bg-canvas-alt/60">
       <div className="shell py-12 sm:py-14">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <a href="#home" className="inline-block" aria-label={`${site.name} — back to top`}>
+            <a
+              href={onHome ? "#home" : "/"}
+              className="inline-block"
+              aria-label={`${site.name} — back to top`}
+            >
               <span className="font-display text-lg font-extrabold tracking-[0.2em] text-ink">
                 AXLORI<span className="text-accent">TECH</span>
               </span>
@@ -41,13 +50,29 @@ export default function SiteFooter() {
                 ].map(([label, href]) => (
                   <li key={href}>
                     <a
-                      href={href}
+                      href={to(href)}
                       className="text-muted transition-colors hover:text-ink link-underline"
                     >
                       {label}
                     </a>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    href="/jeremiah-iselen"
+                    className="text-muted transition-colors hover:text-ink link-underline"
+                  >
+                    Jeremiah Iselen
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/axloritech"
+                    className="text-muted transition-colors hover:text-ink link-underline"
+                  >
+                    Axloritech
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -80,9 +105,9 @@ export default function SiteFooter() {
             © {year} {site.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <ReplayIntroButton />
+            {onHome ? <ReplayIntroButton /> : null}
             <a
-              href="#home"
+              href={to("#home")}
               className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink"
             >
               Back to top ↑

@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { site, socials } from "@/lib/site";
+import { site } from "@/lib/site";
+import { person, organizationNode, personNode, websiteNode } from "@/lib/entities";
 
 /**
  * Fonts are self-hosted (latin subset, variable) so there is no third-party
@@ -46,11 +47,12 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
-  authors: [{ name: site.name, url: site.url }],
-  creator: site.name,
+  authors: [{ name: person.name, url: `${site.url}/jeremiah-iselen` }],
+  creator: person.name,
   publisher: site.name,
   keywords: [
     "Axloritech",
+    "Jeremiah Iselen",
     "full-stack developer",
     "Next.js developer",
     "React developer",
@@ -117,46 +119,25 @@ const bootstrapScript = `
     if (theme === 'light') { d.classList.remove('dark'); } else { d.classList.add('dark'); }
     var seen = localStorage.getItem('axloritech:intro:v1') === 'seen';
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!seen && !reduce) { d.setAttribute('data-intro', 'play'); }
+    var isHome = location.pathname === '/' || location.pathname === '';
+    if (!seen && !reduce && isHome) { d.setAttribute('data-intro', 'play'); }
   } catch (e) {}
 })();
 `.trim();
 
+/**
+ * Site-wide entity graph.
+ *
+ * The two identities are kept strictly separate and then connected with
+ * schema.org relationships:
+ *   Organization (Axloritech) --founder--> Person (Jeremiah Iselen)
+ *   Person (Jeremiah Iselen)   --worksFor--> Organization (Axloritech)
+ * Each entity has a stable `@id` so /jeremiah-iselen and /axloritech can
+ * reference the same nodes instead of redeclaring incompatible copies.
+ */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": `${site.url}/#person`,
-      name: site.name,
-      alternateName: "Axlori",
-      url: site.url,
-      jobTitle: "Full-Stack Software Developer",
-      description: site.description,
-      knowsAbout: [
-        "Next.js",
-        "React",
-        "TypeScript",
-        "JavaScript",
-        "Node.js",
-        "REST APIs",
-        "Databases",
-        "AI integrations",
-        "Progressive Web Apps",
-      ],
-      sameAs: socials.map((s) => s.href),
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${site.url}/#website`,
-      url: site.url,
-      name: site.name,
-      slogan: site.tagline,
-      description: site.description,
-      publisher: { "@id": `${site.url}/#person` },
-      inLanguage: "en",
-    },
-  ],
+  "@graph": [websiteNode(), organizationNode(), personNode()],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -160,8 +160,56 @@ Push to a Git host and import on Vercel — no configuration required. Optionall
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
-so canonical URLs, Open Graph tags, `sitemap.xml` and `robots.txt` use the live domain
-(defaults to `https://axloritech.vercel.app`).
+so canonical URLs, Open Graph tags, `sitemap.xml` and `robots.txt` use the live domain.
+If the variable is unset the origin is taken from Vercel's own
+`VERCEL_PROJECT_PRODUCTION_URL` / `VERCEL_URL`, so it always matches the deployment it was
+built on.
+
+---
+
+## The two identities
+
+The site represents two separate entities, and keeps them separate on purpose:
+
+| Route | Entity | Primary structured data |
+| --- | --- | --- |
+| `/` | Portfolio home | `WebSite`, `Organization`, `Person` |
+| `/jeremiah-iselen` | **Jeremiah Iselen** — the person | `ProfilePage` → `Person` |
+| `/axloritech` | **Axloritech** — the company | `AboutPage` → `Organization` |
+
+All copy and all JSON-LD read from `lib/entities.ts`, so the visible text and the
+structured data can't drift apart.
+
+**How the two are connected.** Each entity has a stable `@id`:
+
+```
+https://<origin>/axloritech#organization
+https://<origin>/jeremiah-iselen#person
+```
+
+`Organization.founder` points at the Person, and `Person.worksFor` points back at the
+Organization. `WebSite.publisher` is the Organization. The graph is emitted site-wide from
+`app/layout.tsx`; the two profile pages add their own page node (`ProfilePage` /
+`AboutPage`) plus a `BreadcrumbList` and reference the shared entities by `@id`.
+
+**Ground rules for editing this content.** Nothing is invented. There are no awards,
+qualifications, client counts, employee numbers, founding dates, revenue figures or
+testimonials anywhere — because none were supplied. Only these profiles are linked:
+GitHub, X, and the Freelancer account, which was verified before being added
+(`/u/axloritech` returns 200 with the profile title "Jeremiah Profile"; non-existent
+usernames return 404). There is deliberately **no LinkedIn profile**, because none exists.
+
+## Search Console
+
+1. Verify the property for the live origin (URL-prefix), e.g.
+   `https://axloritechportfolio.vercel.app`. HTML verification files live in `public/` so
+   they are served from the site root — the filename must match exactly, including the
+   `google<hex>.html` part, with no ` (1)` suffix.
+2. Submit `https://<origin>/sitemap.xml` under **Indexing → Sitemaps**.
+3. Use **URL Inspection → Test live URL** on each page, then **Request Indexing** once.
+   Google allows roughly ten of these per property per day; the button does not make
+   indexing happen, it only moves the URL into a priority crawl queue.
+4. Indexing is never claimed here until it can be observed in Search Console.
 
 ---
 

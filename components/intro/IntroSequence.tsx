@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import strokes from "./writing-paths.json";
 
 /**
@@ -46,6 +47,11 @@ type Phase = "idle" | "playing" | "closing" | "done";
 
 export default function IntroSequence() {
   const reduceMotion = useReducedMotion();
+  /* The handwriting intro is the home page's signature. On the profile pages it
+     would sit between a search visitor and the content they came for, so it only
+     ever runs on "/". */
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const [phase, setPhase] = useState<Phase>("idle");
   const [tagline, setTagline] = useState(false);
 
@@ -171,7 +177,7 @@ export default function IntroSequence() {
 
   /* --------------------------- mount / replay wiring --------------------------- */
   useEffect(() => {
-    const wantsPlay = document.documentElement.dataset.intro === "play";
+    const wantsPlay = onHome && document.documentElement.dataset.intro === "play";
     const reduce =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches || reduceMotion;
 
@@ -180,6 +186,9 @@ export default function IntroSequence() {
     } else if (wantsPlay) {
       finish(); // respect reduced motion: go straight to the site
     } else {
+      /* Covers the profile pages: the bootstrap script may still have armed the
+         overlay, so make sure the scroll lock it implies is released. */
+      document.documentElement.removeAttribute("data-intro");
       setPhase("done");
       revealContent();
     }
@@ -205,7 +214,7 @@ export default function IntroSequence() {
       clearTimers();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onHome]);
 
   const closing = phase === "closing";
 

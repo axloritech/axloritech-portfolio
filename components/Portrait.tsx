@@ -14,7 +14,14 @@ import { useEffect, useRef, useState } from "react";
  * `/image.jpg`, and a 404 from that request can be cached at the CDN, which
  * would keep the photo hidden after the file is uploaded.
  */
-export default function Portrait({ className = "" }: { className?: string }) {
+export default function Portrait({
+  className = "",
+  alt = "Portrait of Jeremiah Iselen, software developer and founder of Axloritech",
+}: {
+  className?: string;
+  /** Descriptive alt text — passed through so each placement reads correctly. */
+  alt?: string;
+}) {
   const imgRef = useRef<HTMLImageElement>(null);
   const [state, setState] = useState<"pending" | "ready" | "missing">("pending");
 
@@ -64,7 +71,7 @@ export default function Portrait({ className = "" }: { className?: string }) {
           <img
             ref={imgRef}
             src="/image.jpg"
-            alt="Portrait of the Axloritech developer"
+            alt={alt}
             width={512}
             height={512}
             decoding="async"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { nav, site, socials } from "@/lib/site";
 import {
@@ -54,6 +55,13 @@ function ThemeToggle({ className }: { className?: string }) {
 
 export default function SiteHeader() {
   const ready = useIntroGate();
+  const pathname = usePathname();
+  /* Section anchors and the wordmark only make sense on the home page; from the
+     profile pages they resolve back to the matching section of "/" instead of a
+     dead "#hash". */
+  const onHome = pathname === "/";
+  const to = (hash: string) => (onHome ? hash : `/${hash}`);
+  const homeHref = onHome ? "#home" : "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
@@ -67,6 +75,7 @@ export default function SiteHeader() {
 
   /* Highlight the section currently in view. */
   useEffect(() => {
+    if (!onHome) return;
     const ids = nav.map((n) => n.href.slice(1));
     const sections = ids
       .map((id) => document.getElementById(id))
@@ -84,7 +93,7 @@ export default function SiteHeader() {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, [ready]);
+  }, [ready, onHome]);
 
   /* Mobile panel: lock scroll + close on Escape. */
   useEffect(() => {
@@ -111,27 +120,24 @@ export default function SiteHeader() {
     >
       <div className="shell flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]">
         {/* Wordmark */}
-        <a
-          href="#home"
-          className="group flex items-baseline gap-2.5 py-2"
-          aria-label={`${site.name} — home`}
-        >
+        <a href={homeHref} className="group flex items-baseline gap-2.5 py-2">
           <span className="font-display text-[0.95rem] font-extrabold tracking-[0.2em] text-ink sm:text-base">
             AXLORI<span className="text-accent">TECH</span>
           </span>
           <span className="hidden font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted lg:inline">
             {site.tagline}
           </span>
+          <span className="sr-only">— home</span>
         </a>
 
         {/* Desktop nav */}
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
           {nav.map((item) => {
-            const isActive = active === item.href;
+            const isActive = onHome && active === item.href;
             return (
               <a
                 key={item.href}
-                href={item.href}
+                href={to(item.href)}
                 aria-current={isActive ? "true" : undefined}
                 className={`relative rounded-full px-3.5 py-2 text-sm transition-colors ${
                   isActive ? "text-ink" : "text-muted hover:text-ink"
@@ -171,7 +177,7 @@ export default function SiteHeader() {
           </div>
           <span className="hidden h-5 w-px bg-line sm:block" aria-hidden="true" />
           <ThemeToggle />
-          <a href="#contact" className="btn btn-primary btn-sm hidden lg:inline-flex">
+          <a href={to("#contact")} className="btn btn-primary btn-sm hidden lg:inline-flex">
             Let&apos;s talk
           </a>
           <button
@@ -202,7 +208,7 @@ export default function SiteHeader() {
               {nav.map((item, i) => (
                 <motion.a
                   key={item.href}
-                  href={item.href}
+                  href={to(item.href)}
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -235,7 +241,7 @@ export default function SiteHeader() {
                 })}
               </div>
               <a
-                href="#contact"
+                href={to("#contact")}
                 onClick={() => setOpen(false)}
                 className="btn btn-accent btn-sm"
               >
