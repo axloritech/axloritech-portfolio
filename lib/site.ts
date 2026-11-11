@@ -8,12 +8,21 @@
  *
  * Order of preference:
  *  1. NEXT_PUBLIC_SITE_URL  — set this to the live custom domain when there is one.
- *  2. VERCEL_PROJECT_PRODUCTION_URL / VERCEL_URL — injected by Vercel, so the
- *     canonical always matches the domain the build is actually served from.
- *     (Hardcoding a *other* project's domain here is what made Google treat the
- *     site as a duplicate of an unrelated page.)
- *  3. localhost — local development only.
+ *  2. VERCEL_PROJECT_PRODUCTION_URL / VERCEL_URL — injected by Vercel.
+ *  3. URL / DEPLOY_PRIME_URL — injected by Netlify (NETLIFY=true). Netlify does
+ *     not set any Vercel variables; missing this step is what made the Netlify
+ *     build emit `http://localhost:3000` in its sitemap, canonical and OG
+ *     tags, which Search Console rejected with "URL not allowed".
+ *  4. The primary production domain — production builds must never fall back
+ *     to localhost, even if a host injects nothing at all.
+ *  5. localhost — local development only.
+ *
+ * Each production deployment (Vercel + Netlify) therefore canonicalises to
+ * the domain it is actually served from, and every sitemap only ever lists
+ * URLs that belong to the host serving it.
  */
+export const PRIMARY_URL = "https://axloritechportfolio.vercel.app";
+
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (explicit) return explicit.replace(/\/+$/, "");
@@ -21,6 +30,13 @@ function resolveSiteUrl(): string {
   const vercelHost =
     process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
   if (vercelHost) return `https://${vercelHost.replace(/\/+$/, "")}`;
+
+  if (process.env.NETLIFY) {
+    const netlifyUrl = process.env.URL?.trim() || process.env.DEPLOY_PRIME_URL?.trim();
+    if (netlifyUrl) return netlifyUrl.replace(/\/+$/, "");
+  }
+
+  if (process.env.NODE_ENV === "production") return PRIMARY_URL;
 
   return "http://localhost:3000";
 }
