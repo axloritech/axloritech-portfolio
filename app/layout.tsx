@@ -2,7 +2,13 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/lib/site";
-import { person, organizationNode, personNode, websiteNode } from "@/lib/entities";
+import {
+  person,
+  organizationNode,
+  personNode,
+  softwareApplicationNodes,
+  websiteNode,
+} from "@/lib/entities";
 
 /**
  * Fonts are self-hosted (latin subset, variable) so there is no third-party
@@ -137,7 +143,7 @@ const bootstrapScript = `
  */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [websiteNode(), organizationNode(), personNode()],
+  "@graph": [websiteNode(), organizationNode(), personNode(), ...softwareApplicationNodes()],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

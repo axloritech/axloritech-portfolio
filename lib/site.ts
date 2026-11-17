@@ -4,37 +4,31 @@
  */
 
 /**
- * Canonical origin for the site.
+ * Canonical origin for the site — ONE domain, on every deployment.
  *
- * Order of preference:
- *  1. NEXT_PUBLIC_SITE_URL  — set this to the live custom domain when there is one.
- *  2. VERCEL_PROJECT_PRODUCTION_URL / VERCEL_URL — injected by Vercel.
- *  3. URL / DEPLOY_PRIME_URL — injected by Netlify (NETLIFY=true). Netlify does
- *     not set any Vercel variables; missing this step is what made the Netlify
- *     build emit `http://localhost:3000` in its sitemap, canonical and OG
- *     tags, which Search Console rejected with "URL not allowed".
- *  4. The primary production domain — production builds must never fall back
- *     to localhost, even if a host injects nothing at all.
- *  5. localhost — local development only.
+ * The site was previously served as two identical copies
+ * (axloritechportfolio.vercel.app and axloritech.netlify.app), each
+ * canonicalising to itself. Two self-canonical duplicates split crawl and
+ * ranking signals and leave Google to choose between them, so the owner
+ * consolidated on 2026-11-11:
  *
- * Each production deployment (Vercel + Netlify) therefore canonicalises to
- * the domain it is actually served from, and every sitemap only ever lists
- * URLs that belong to the host serving it.
+ *  - axloritechportfolio.vercel.app is THE canonical domain.
+ *  - axloritech.netlify.app 301-redirects every path to it (netlify.toml).
+ *
+ * Resolution:
+ *  1. NEXT_PUBLIC_SITE_URL — explicit override (e.g. a future custom domain).
+ *  2. PRIMARY_URL — every production build, whichever host built it. This
+ *     also keeps preview/staging builds canonical to production instead of
+ *     creating more indexable duplicates, and makes it impossible for any
+ *     host to ever emit localhost (or a wrong host) in a sitemap again —
+ *     the failure Search Console reported as "URL not allowed".
+ *  3. localhost — local development only.
  */
 export const PRIMARY_URL = "https://axloritechportfolio.vercel.app";
 
 function resolveSiteUrl(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (explicit) return explicit.replace(/\/+$/, "");
-
-  const vercelHost =
-    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() || process.env.VERCEL_URL?.trim();
-  if (vercelHost) return `https://${vercelHost.replace(/\/+$/, "")}`;
-
-  if (process.env.NETLIFY) {
-    const netlifyUrl = process.env.URL?.trim() || process.env.DEPLOY_PRIME_URL?.trim();
-    if (netlifyUrl) return netlifyUrl.replace(/\/+$/, "");
-  }
 
   if (process.env.NODE_ENV === "production") return PRIMARY_URL;
 

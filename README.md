@@ -96,12 +96,14 @@ Almost everything lives in [`lib/site.ts`](lib/site.ts):
 | Skill groups + badges | `skillGroups` |
 | Contact CTA target | `contactEmail` |
 
-**Canonical domain / SEO:** `site.url` resolves in this order — `NEXT_PUBLIC_SITE_URL`,
-then Vercel's own `VERCEL_PROJECT_PRODUCTION_URL` / `VERCEL_URL`, then localhost. So the
-canonical tag, `og:url`, JSON-LD, `robots.txt` and `sitemap.xml` always match the domain
-the build is actually served from. When you attach a custom domain, set
-`NEXT_PUBLIC_SITE_URL=https://yourdomain.com` in the Vercel project's environment
-variables and redeploy, or the canonical will keep pointing at the `*.vercel.app` host.
+**Canonical domain / SEO:** there is exactly ONE canonical domain —
+`https://axloritechportfolio.vercel.app`. `site.url` is `NEXT_PUBLIC_SITE_URL` if set,
+otherwise that primary domain in every production build (localhost in dev). The site also
+exists on Netlify as a staging copy, but `netlify.toml` 301-redirects every path on
+`axloritech.netlify.app` to the canonical domain: two self-canonical duplicates split
+ranking signals and break sitemap validation, so they were consolidated. When you attach
+a custom domain, set `NEXT_PUBLIC_SITE_URL=https://yourdomain.com` in the Vercel project's
+environment variables, redeploy, and update the redirect target in `netlify.toml`.
 
 **Portrait photo:** the round portrait at the top of the About section reads
 `public/image.jpg` directly — drop your photo in at that exact path (square crop works
@@ -164,9 +166,9 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
 so canonical URLs, Open Graph tags, `sitemap.xml` and `robots.txt` use the live domain.
-If the variable is unset the origin is taken from Vercel's own
-`VERCEL_PROJECT_PRODUCTION_URL` / `VERCEL_URL`, so it always matches the deployment it was
-built on.
+If the variable is unset, production builds use the canonical primary domain
+(`https://axloritechportfolio.vercel.app`) — never a host-injected URL and never
+localhost, so a sitemap can never again contain URLs Google must reject.
 
 ---
 

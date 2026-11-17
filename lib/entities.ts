@@ -237,4 +237,26 @@ export const productList = projects.map((p) => ({
   tags: p.tags,
 }));
 
+/**
+ * The shipped products as SoftwareApplication entities, so Google can
+ * identify each project as software by Jeremiah Iselen / Axloritech.
+ * Only facts already on the site are asserted (name, live URL, description,
+ * tech tags) — no ratings, prices, download counts or reviews.
+ */
+export function softwareApplicationNodes() {
+  return projects.map((p) => ({
+    "@type": "SoftwareApplication",
+    "@id": `${p.href}#softwareapplication`,
+    name: p.name,
+    url: p.href,
+    description: p.description,
+    applicationCategory: "WebApplication",
+    operatingSystem: "Web browser",
+    keywords: p.tags.join(", "),
+    author: { "@id": personId },
+    creator: { "@id": personId },
+    publisher: { "@id": orgId },
+  }));
+}
+
 export const focusAreas = capabilities;

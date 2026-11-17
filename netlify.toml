@@ -1,0 +1,18 @@
+# Netlify serves a staging copy of this site only.
+#
+# The canonical production home is https://axloritechportfolio.vercel.app
+# (see lib/site.ts). Running the identical site as two self-canonical
+# duplicates split crawl/ranking signals and confused canonical selection,
+# so every request to the Netlify production hostname permanently redirects
+# to the same path on the canonical domain.
+#
+# The Host condition matters: Netlify deploy previews
+# (e.g. deploy-preview-123--axloritech.netlify.app) do NOT match and keep
+# working as previews. Build settings stay as configured in the Netlify UI.
+
+[[redirects]]
+  from = "/*"
+  to = "https://axloritechportfolio.vercel.app/:splat"
+  status = 301
+  force = true
+  conditions = { Host = ["axloritech.netlify.app"] }
